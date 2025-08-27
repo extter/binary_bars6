@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Barre Binarie</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff;
+      display: flex;
+      justify-content: stretch;
+      align-items: stretch;
+      height: 100vh;
+      width: 100vw;
+    }
+    .preview {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 100%;
+    }
+    .bar {
+      flex: 1 0 auto;
+      height: 100%;
+      box-sizing: border-box; /* importantissimo per far rientrare i bordi nella larghezza */
+    }
+    .bar.white { 
+      background: #ffffff; 
+      border-left: 1px solid #000000;
+    }
+    .bar.black { 
+      background: #000000; 
+      border-left: 1px solid #ffffff;
+    }
+    /* opzionale: se vuoi anche il bordo destro dell'ultima barra */
+    .bar:last-child {
+      border-right: 1px solid currentColor;
+    }
+  </style>
+</head>
+<body>
+  <div id="preview" class="preview"></div>
+
+  <script>
+    const number = 4444; 
+    const bits = 13;    
+
+    function toBinaryString(n, minBits=0){
+      let bin = n.toString(2);
+      if(bin.length < minBits) bin = '0'.repeat(minBits - bin.length) + bin;
+      return bin;
+    }
+
+    function render(num){
+      const preview = document.getElementById('preview');
+      preview.innerHTML = '';
+      const bin = toBinaryString(num, bits);
+      for(const ch of bin){
+        const bar = document.createElement('div');
+        bar.className = 'bar ' + (ch === '1' ? 'black' : 'white');
+        preview.appendChild(bar);
+      }
+    }
+
+    render(number);
+  </script>
+</body>
+</html>
